@@ -3,6 +3,7 @@ package com.ruinastats.loader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,14 +72,51 @@ public class ExcelLoader {
 						break;
 					}
 					log.info("Leyendo fila " + row.getRowNum());
-					String idMatch = (int)row.getCell(MATCH_WEEK).getNumericCellValue() + "_" + row.getCell(LOCAL_TEAM).getStringCellValue() + "_" + row.getCell(AWAY_TEAM).getStringCellValue();
-					MatchData matchData = new MatchData(idMatch, (int)row.getCell(MATCH_WEEK).getNumericCellValue(), row.getCell(LOCAL_TEAM).getStringCellValue(), row.getCell(AWAY_TEAM).getStringCellValue(), 
+					String idMatch = row.getCell(LOCAL_TEAM).getStringCellValue() + "_" + row.getCell(AWAY_TEAM).getStringCellValue();
+					String referee = row.getCell(REFEREE).getStringCellValue();
+					String localTeam = row.getCell(LOCAL_TEAM).getStringCellValue();
+					String awayTeam = row.getCell(AWAY_TEAM).getStringCellValue();
+					MatchData matchData = new MatchData(idMatch, (int)row.getCell(MATCH_WEEK).getNumericCellValue(), localTeam, awayTeam, 
 							(int)row.getCell(LOCAL_GOALS).getNumericCellValue(), (int)row.getCell(AWAY_GOALS).getNumericCellValue(), (int)row.getCell(LOCAL_CORNER).getNumericCellValue(), (int)row.getCell(AWAY_CORNER).getNumericCellValue(), 
 							(int)row.getCell(LOCAL_YELLOW_CARD).getNumericCellValue(), (int)row.getCell(AWAY_YELLOW_CARD).getNumericCellValue(), (int)row.getCell(LOCAL_RED_CARD).getNumericCellValue(), 
-							(int)row.getCell(AWAY_RED_CARD).getNumericCellValue(), row.getCell(REFEREE).getStringCellValue());
+							(int)row.getCell(AWAY_RED_CARD).getNumericCellValue(), referee);
 					log.info(matchData.toString());
 					
+					//Si la cache no contiene al equipo local, se inserta y se inicia la lista de partidos
+					if(!mapTeamCache.containsKey(localTeam)) {
+						List<MatchData> matchDataList = new ArrayList<MatchData>();
+						matchDataList.add(matchData);
+						mapTeamCache.put(localTeam, matchDataList);
+					} else {
+						List<MatchData> matchDataList = mapTeamCache.get(localTeam);
+						if(!matchDataList.contains(matchData)) {
+							matchDataList.add(matchData);
+						}
+					}
 					
+					//Si la cache no contiene al equipo visitante, se inserta y se inicia la lista de partidos
+					if(!mapTeamCache.containsKey(awayTeam)) {
+						List<MatchData> matchDataList = new ArrayList<MatchData>();
+						matchDataList.add(matchData);
+						mapTeamCache.put(awayTeam, matchDataList);
+					} else {
+						List<MatchData> matchDataList = mapTeamCache.get(awayTeam);
+						if(!matchDataList.contains(matchData)) {
+							matchDataList.add(matchData);
+						}
+					}
+					
+					//Si la cache no contiene al arbitro, se inserta y se inicia la lista de partidos
+					if(!mapRefereeCache.containsKey(referee)) {
+						List<MatchData> matchDataList = new ArrayList<MatchData>();
+						matchDataList.add(matchData);
+						mapRefereeCache.put(referee, matchDataList);
+					} else {
+						List<MatchData> matchDataList = mapRefereeCache.get(referee);
+						if(!matchDataList.contains(matchData)) {
+							matchDataList.add(matchData);
+						}
+					}
 				}
 			}
 	

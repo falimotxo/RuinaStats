@@ -8,7 +8,7 @@ package com.ruinastats.loader.data;
  */
 public class MatchData {
 
-	/** Identificador de partido (JORNADA_EQUIPO-LOCAL_EQUIPO-VISITANTE */
+	/** Identificador de partido (EQUIPO-LOCAL_EQUIPO-VISITANTE) */
 	private String idMatch;
 
 	/** Número de jornada */
@@ -289,6 +289,15 @@ public class MatchData {
 		return "Jornada " + this.matchWeek + ": " + this.localTeam + " - " + this.awayTeam + " (" + this.localGoals
 				+ "-" + this.awayGoals + ") -> Tarjetas: " + this.localYellowCard + "(" + this.localRedCard + ")-"
 				+ this.awayYellowCard + "(" + this.awayRedCard + ") [" + this.referee + "]";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean eq = false;
+		if(obj != null && obj instanceof MatchData) {
+			eq = this.getIdMatch().equals(((MatchData)obj).getIdMatch());
+		}
+		return eq;
 	}
 
 }
