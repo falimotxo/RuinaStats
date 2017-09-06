@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.ruinastats.loader.data.MatchData;
+import com.ruinastats.data.MatchData;
 
 /**
  * Clase que gestiona la carga de datos del excel
@@ -45,6 +46,10 @@ public class ExcelLoader {
 	private Map<String, List<MatchData>> mapTeamCache;
 	/** Caché de partidos indexado por árbitro */
 	private Map<String, List<MatchData>> mapRefereeCache;
+	/** Listado de equipos */
+	private List<String> listTeam;
+	/** Listado de arbitros */
+	private List<String> listReferee;
 	
 	/**
 	 * Método que realiza la carga de datos del excel y lo inserta en una caché
@@ -56,6 +61,10 @@ public class ExcelLoader {
 			mapTeamCache = new HashMap<String, List<MatchData>>();
 			log.info("Iniciando caché de árbitros");
 			mapRefereeCache = new HashMap<String, List<MatchData>>();
+			log.info("Iniciando listado de equipos");
+			listTeam = new ArrayList<String>();
+			log.info("Iniciando listado de árbitros");
+			listReferee = new ArrayList<String>();
 			
 			log.info("Cargando excel -> " + excelFile);
 			FileInputStream file = new FileInputStream(new File(excelFile));
@@ -94,6 +103,11 @@ public class ExcelLoader {
 						}
 					}
 					
+					//Se añade el equipo al listado de equipos
+					if(!listTeam.contains(localTeam)) {
+						listTeam.add(localTeam);
+					}
+					
 					//Si la cache no contiene al equipo visitante, se inserta y se inicia la lista de partidos
 					if(!mapTeamCache.containsKey(awayTeam)) {
 						List<MatchData> matchDataList = new ArrayList<MatchData>();
@@ -104,6 +118,11 @@ public class ExcelLoader {
 						if(!matchDataList.contains(matchData)) {
 							matchDataList.add(matchData);
 						}
+					}
+					
+					//Se añade el equipo al listado de equipos
+					if(!listTeam.contains(awayTeam)) {
+						listTeam.add(awayTeam);
 					}
 					
 					//Si la cache no contiene al arbitro, se inserta y se inicia la lista de partidos
@@ -117,9 +136,17 @@ public class ExcelLoader {
 							matchDataList.add(matchData);
 						}
 					}
+					
+					//Se añade el árbitro al listado de árbitros
+					if(!listReferee.contains(referee)) {
+						listReferee.add(referee);
+					}
 				}
 			}
 	
+			Collections.sort(listTeam);
+			Collections.sort(listReferee);
+			
 			// cerramos el libro excel
 			workbook.close();
 			log.info("Carga de datos finalizada");
@@ -140,6 +167,20 @@ public class ExcelLoader {
 	 */
 	public Map<String, List<MatchData>> getMapRefereeCache() {
 		return mapRefereeCache;
+	}
+
+	/**
+	 * @return the listTeam
+	 */
+	public List<String> getListTeam() {
+		return listTeam;
+	}
+
+	/**
+	 * @return the listReferee
+	 */
+	public List<String> getListReferee() {
+		return listReferee;
 	}
 	
 }
