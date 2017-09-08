@@ -1,5 +1,6 @@
 package com.ruinastats.process;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -290,75 +291,76 @@ public class StatsProcess {
 				totalCardsReferee += matchData.getLocalYellowCard() + matchData.getAwayYellowCard() + matchData.getLocalRedCard() + matchData.getAwayRedCard();
 			}
 		}
+		DecimalFormat df = new DecimalFormat("0.00");
 		
-		stats += "--> Goles por partido: " + (totalGoalsMatchTeams / totalMatchs) + " | Fiabilidad o2.5 goles: "
-				+ ((overTotalGoalsMatchTeams / totalMatchs) * 100) + "% - u2.5 goles: "
-				+ (100 - ((overTotalGoalsMatchTeams / totalMatchs) * 100)) + "%\n";
-		stats += "--> Goles por partido del " + this.teamLocal + ": " + (totalGoalsMatchTeamLocal / totalMatchsLocal)
-				+ " | Fiabilidad o2.5 goles: " + ((overTotalGoalsMatchTeamLocal / totalMatchsLocal) * 100) + "%\n";
+		stats += "--> Goles por partido: " + df.format((totalGoalsMatchTeams / totalMatchs)) + " | Fiabilidad o2.5 goles: "
+				+ df.format(((overTotalGoalsMatchTeams / totalMatchs) * 100)) + "% - u2.5 goles: "
+				+ df.format((100 - ((overTotalGoalsMatchTeams / totalMatchs) * 100))) + "%\n";
+		stats += "--> Goles por partido del " + this.teamLocal + ": " + df.format((totalGoalsMatchTeamLocal / totalMatchsLocal))
+				+ " | Fiabilidad o2.5 goles: " + df.format(((overTotalGoalsMatchTeamLocal / totalMatchsLocal) * 100)) + "%\n";
 		stats += "--> Goles por partido en casa del " + this.teamLocal + ": "
-				+ (totalGoalsMatchTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) + " | Fiabilidad o2.5 goles: "
-				+ ((overTotalGoalsMatchTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) * 100) + "%\n";
+				+ df.format((totalGoalsMatchTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal)) + " | Fiabilidad o2.5 goles: "
+				+ df.format(((overTotalGoalsMatchTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) * 100)) + "%\n";
 		stats += "--> Goles del " + this.teamLocal + " jugando en casa: "
-				+ (totalGoalsTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) + "\n";
-		stats += "--> Goles por partido del " + this.teamAway + ": " + (totalGoalsMatchTeamAway / totalMatchsAway)
-				+ " | Fiabilidad o2.5 goles: " + ((overTotalGoalsMatchTeamAway / totalMatchsAway) * 100) + "%\n";
+				+ df.format((totalGoalsTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal)) + "\n";
+		stats += "--> Goles por partido del " + this.teamAway + ": " + df.format((totalGoalsMatchTeamAway / totalMatchsAway))
+				+ " | Fiabilidad o2.5 goles: " + df.format(((overTotalGoalsMatchTeamAway / totalMatchsAway) * 100)) + "%\n";
 		stats += "--> Goles por partido fuera de casa del " + this.teamAway + ": "
-				+ (totalGoalsMatchTeamAwayPlayingAway / totalMatchsAwayPlayingAway) + " | Fiabilidad o2.5 goles: "
-				+ ((overTotalGoalsMatchTeamAwayPlayingAway / totalMatchsAwayPlayingAway) * 100) + "%\n";
+				+ df.format((totalGoalsMatchTeamAwayPlayingAway / totalMatchsAwayPlayingAway)) + " | Fiabilidad o2.5 goles: "
+				+ df.format(((overTotalGoalsMatchTeamAwayPlayingAway / totalMatchsAwayPlayingAway) * 100)) + "%\n";
 		stats += "--> Goles del " + this.teamAway + " jugando como visitante: "
-				+ (totalGoalsTeamAwayPlayingAway / totalMatchsAwayPlayingAway) + "\n";
-		stats += "--> Ambos marcan por partido: " + (bothScoreGoals / totalMatchs) + " | Fiabilidad: "
-				+ ((bothScoreGoals / totalMatchs) * 100) + "%\n";
+				+ df.format((totalGoalsTeamAwayPlayingAway / totalMatchsAwayPlayingAway)) + "\n";
+		stats += "--> Ambos marcan por partido: " + df.format((bothScoreGoals / totalMatchs)) + " | Fiabilidad: "
+				+ df.format(((bothScoreGoals / totalMatchs) * 100)) + "%\n";
 		stats += "--> Ambos marcan por partido del " + this.teamLocal + ": "
-				+ (bothScoreGoalsTeamLocal / totalMatchsLocal) + " | Fiabilidad: "
-				+ ((bothScoreGoalsTeamLocal / totalMatchsLocal) * 100) + "%\n";
+				+ df.format((bothScoreGoalsTeamLocal / totalMatchsLocal)) + " | Fiabilidad: "
+				+ df.format(((bothScoreGoalsTeamLocal / totalMatchsLocal)) * 100) + "%\n";
 		stats += "--> Ambos marcan por partido del " + this.teamLocal + " jugando como local: "
-				+ (bothScoreGoalsTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) + " | Fiabilidad: "
-				+ ((bothScoreGoalsTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) * 100) + "%\n";
-		stats += "--> Ambos marcan por partido del " + this.teamAway + ": " + (bothScoreGoalsTeamAway / totalMatchsAway)
-				+ " | Fiabilidad: " + ((bothScoreGoalsTeamAway / totalMatchsAway) * 100) + "%\n";
+				+ df.format((bothScoreGoalsTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal)) + " | Fiabilidad: "
+				+ df.format(((bothScoreGoalsTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) * 100)) + "%\n";
+		stats += "--> Ambos marcan por partido del " + this.teamAway + ": " + df.format((bothScoreGoalsTeamAway / totalMatchsAway))
+				+ " | Fiabilidad: " + df.format(((bothScoreGoalsTeamAway / totalMatchsAway) * 100)) + "%\n";
 		stats += "--> Ambos marcan por partido del " + this.teamAway + " jugando como visitante: "
-				+ (bothScoreGoalsTeamAwayPlayingAway / totalMatchsAwayPlayingAway) + " | Fiabilidad: "
-				+ ((bothScoreGoalsTeamAwayPlayingAway / totalMatchsAwayPlayingAway) * 100) + "%\n";
+				+ df.format((bothScoreGoalsTeamAwayPlayingAway / totalMatchsAwayPlayingAway)) + " | Fiabilidad: "
+				+ df.format(((bothScoreGoalsTeamAwayPlayingAway / totalMatchsAwayPlayingAway) * 100)) + "%\n";
 		stats += "--> Portería a cero por partido del " + this.teamLocal + ": "
-				+ (goalToZeroTeamLocal / totalMatchsLocal) + " | Fiabilidad: "
-				+ ((goalToZeroTeamLocal / totalMatchsLocal) * 100) + "%\n";
+				+ df.format((goalToZeroTeamLocal / totalMatchsLocal)) + " | Fiabilidad: "
+				+ df.format(((goalToZeroTeamLocal / totalMatchsLocal) * 100)) + "%\n";
 		stats += "--> Portería a cero por partido del " + this.teamLocal + " jugando como local: "
-				+ (goalToZeroTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) + " | Fiabilidad: "
-				+ ((goalToZeroTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) * 100) + "%\n";
-		stats += "--> Portería a cero por partido del " + this.teamAway + ": " + (goalToZeroTeamAway / totalMatchsAway)
-				+ " | Fiabilidad: " + ((goalToZeroTeamAway / totalMatchsAway) * 100) + "%\n";
+				+ df.format((goalToZeroTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal)) + " | Fiabilidad: "
+				+ df.format(((goalToZeroTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) * 100)) + "%\n";
+		stats += "--> Portería a cero por partido del " + this.teamAway + ": " + df.format((goalToZeroTeamAway / totalMatchsAway))
+				+ " | Fiabilidad: " + df.format(((goalToZeroTeamAway / totalMatchsAway) * 100)) + "%\n";
 		stats += "--> Portería a cero por partido del " + this.teamAway + " jugando como visitante: "
-				+ (goalToZeroTeamAwayPlayingAway / totalMatchsAwayPlayingAway) + " | Fiabilidad: "
-				+ ((goalToZeroTeamAwayPlayingAway / totalMatchsAwayPlayingAway) * 100) + "%\n";
+				+ df.format((goalToZeroTeamAwayPlayingAway / totalMatchsAwayPlayingAway)) + " | Fiabilidad: "
+				+ df.format(((goalToZeroTeamAwayPlayingAway / totalMatchsAwayPlayingAway) * 100)) + "%\n";
 		stats += "\n";
-		stats += "--> Corners por partido: " + (totalCornersMatchTeams / totalMatchs) + "\n";
-		stats += "--> Corners en los partidos del " + this.teamLocal + ": " + (cornersTeamLocal / totalMatchsLocal)
+		stats += "--> Corners por partido: " + df.format((totalCornersMatchTeams / totalMatchs)) + "\n";
+		stats += "--> Corners en los partidos del " + this.teamLocal + ": " + df.format((cornersTeamLocal / totalMatchsLocal))
 				+ "\n";
 		stats += "--> Corners a favor del " + this.teamLocal + " jugando como local: "
-				+ (cornersTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) + "\n";
+				+ df.format((cornersTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal)) + "\n";
 		stats += "--> Corners en contra del " + this.teamLocal + " jugando como local: "
-				+ (cornersTeamAwayPlayingLocal / totalMatchsLocalPlayingLocal) + "\n";
-		stats += "--> Corners en los partidos del " + this.teamAway + ": " + (cornersTeamAway / totalMatchsAway) + "\n";
+				+ df.format((cornersTeamAwayPlayingLocal / totalMatchsLocalPlayingLocal)) + "\n";
+		stats += "--> Corners en los partidos del " + this.teamAway + ": " + df.format((cornersTeamAway / totalMatchsAway)) + "\n";
 		stats += "--> Corners a favor del " + this.teamAway + " jugando como visitante: "
-				+ (cornersTeamAwayPlayingAway / totalMatchsAwayPlayingAway) + "\n";
+				+ df.format((cornersTeamAwayPlayingAway / totalMatchsAwayPlayingAway)) + "\n";
 		stats += "--> Corners en contra del " + this.teamAway + " jugando como visitante: "
-				+ (cornersTeamLocalPlayingAway / totalMatchsAwayPlayingAway) + "\n";
+				+ df.format((cornersTeamLocalPlayingAway / totalMatchsAwayPlayingAway)) + "\n";
 		stats += "\n";
-		stats += "--> Tarjetas por partido: " + (totalCardsMatchTeams / totalMatchs) + "\n";
-		stats += "--> Tarjetas en los partidos del " + this.teamLocal + ": " + (cardsTeamLocal / totalMatchsLocal)
+		stats += "--> Tarjetas por partido: " + df.format((totalCardsMatchTeams / totalMatchs)) + "\n";
+		stats += "--> Tarjetas en los partidos del " + this.teamLocal + ": " + df.format((cardsTeamLocal / totalMatchsLocal))
 				+ "\n";
 		stats += "--> Tarjetas en los partidos del " + this.teamLocal + " jugando como local: "
-				+ (cardsTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal) + "\n";
-		stats += "--> Tarjetas en los partidos del " + this.teamAway + ": " + (cardsTeamAway / totalMatchsAway)
+				+ df.format((cardsTeamLocalPlayingLocal / totalMatchsLocalPlayingLocal)) + "\n";
+		stats += "--> Tarjetas en los partidos del " + this.teamAway + ": " + df.format((cardsTeamAway / totalMatchsAway))
 				+ "\n";
 		stats += "--> Tarjetas en los partidos del " + this.teamAway + " jugando como visitante: "
-				+ (cardsTeamAwayPlayingAway / totalMatchsAwayPlayingAway) + "\n";
+				+ df.format((cardsTeamAwayPlayingAway / totalMatchsAwayPlayingAway)) + "\n";
 		
 		if(this.referee != null) {
 			stats += "\n";
-			stats += "--> Tarjetas en los partidos del " + this.referee + ": " + (totalCardsReferee / totalMatchsReferee)
+			stats += "--> Tarjetas en los partidos del " + this.referee + ": " + df.format((totalCardsReferee / totalMatchsReferee))
 					+ "\n";
 		}
 		
